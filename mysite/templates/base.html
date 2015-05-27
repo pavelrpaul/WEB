@@ -1,28 +1,112 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head lang="en">
     <meta charset="UTF-8">
     <meta http-equiv="content-language" content="en">
-    <link type="text/css" rel="stylesheet" href="bootstrap-3.3.4-dist/css/bootstrap.css"/>
-    <link type="text/css" rel="stylesheet" href="style.css"/>
-    <title> instaMe"dynamic" </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link type="text/css" rel="stylesheet" href="/bootstrap-3.3.4-dist/css/bootstrap.css"/>
+    <link type="text/css" rel="stylesheet" href="/bootstrap-3.3.4-dist/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="/bootstrap-3.3.4-dist/css/bootstrap-theme.min.css"/>
+    <link type="text/css" rel="stylesheet" href="/register_style.css"/>
+    <script type="text/javascript" src="/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
+    <title>{% block title %}base{% endblock %}</title>
 </head>
 <body>
-<div class="navbar navbar-inverse navbar-fixed-top" id="header">
-    <div class="navbar-inner">
-        <div class="container">
-            <div><p id="project_Name">instaMe</p></div>
+<div class="container" id="out_header" style="display: inline-block;">
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid" style="height: 100px;">
+            <a class="navbar-brand" style="font-size: 37px; margin-top: 15px;">InstaMe
+                <p style="font-size: 15px;font-family: Times; margin-top: 3px;">Do it bravery ...</p></a>
+            <!-- container-fluid -->
+            <div class="row-fluid" style="">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="margin-top: 20px; white-space: nowrap;">
+                    <!-- search field -->
+                    <div class="col-lg-9 col-md-10 col-sm-10 col-xs-11" id="search_field" style="display: inline-block;" >
+                        <div class="row">
+                            <form>
+                                <div class="form-group" >
+                                    <input type="text" class="form-control search_field_class" placeholder="Search is all you need">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- /search field -->
+                    <!-- ask button -->
+                    <div class="col-sm-1 col-lg-1 col-md-1 col-xs-1 text-center" id="ask_btn" style="display: inline-block;">
+                        <a href="/ask">
+                            <button type="submit" class="btn btn-success" style="background-color: #0F8933;">
+                                Search</button>
+                        </a>
+                    </div>
+                    <!-- /ask button -->
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" id="user_field" style="white-space: nowrap;">
+                    <div class="row" id="user_header">
+                    {% block user_field %}
+                        {% if user.is_authenticated %}
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <a href="/profile/{{ user.username }}">
+                                <img src="https://www.apple.com/v/home/bq/images/og.jpg?201504300657" alt="profile_photo" class="img-circle profile_photo">
+                            </a>
+                        </div>
 
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                            <h5><a href="/profile/" style=" text-decoration: none; ">
+                                {{ user.username }}
+                            </a></h5>
+
+                            <div class="row">
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <a href="/settings" style="">Settings</a>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                    <a href="/logout" style="">Log Out</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% else %}
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <!-- empty -->
+                            </div>
+
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <!-- empty -->
+                                <div class="row">
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <a href="/settings" style="">Settings</a>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                        <a href="/login" style="">Log In</a>
+                                    </div>
+                                </div>
+                            </div>    
+                        {% endif %}
+                        {%endblock%}
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+    </nav>
 </div>
 
-<div class="navbar container" id="my_container">
 
-    <h1>Bootstrap starter template</h1>
-    <p>Use this document as a way to quick start any new project.<br> All you get is this message and a barebones HTML document.</p>
+<table width="60%" height="100%" border="0">
+    <tr>
+        <td height="70px"></td>
+    </tr>
+    <tr>
+        <td width="5%"></td>
+        <td width="50%">
+        {% block content_left %}
+<!--             {% for comment in comment_list %}
+                <p>{{comment.text}}</p>
+            {% endfor%} -->
+        {% endblock %}
+        </td>
+        <td width="5%"></td>
+    </tr>
+</table>
 
 
-</div>
 </body>
 </html>

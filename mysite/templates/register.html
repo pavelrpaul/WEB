@@ -1,150 +1,58 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <meta http-equiv="content-language" content="en">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link type="text/css" rel="stylesheet" href="bootstrap-3.3.4-dist/css/bootstrap.css"/>
-    <link type="text/css" rel="stylesheet" href="register_style.css"/>
-    <script type="text/javascript" src="bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
-    <title></title>
-</head>
-<body>
-<div class="container" id="out_header" style="display: inline-block;">
-    <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid" style="height: 100px;">
-            <a class="navbar-brand" style="font-size: 37px; margin-top: 15px;">InstaMe
-                <p style="font-size: 15px;font-family: Times; margin-top: 3px;">Do it bravery ...</p></a>
-            <!-- container-fluid -->
-            <div class="row-fluid" style="">
-                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="margin-top: 20px; white-space: nowrap;">
-                    <!-- search field -->
-                    <div class="col-lg-9 col-md-10 col-sm-10 col-xs-11" id="search_field" style="display: inline-block;" >
-                        <div class="row">
-                            <form>
-                                <div class="form-group" >
-                                    <input type="text" class="form-control search_field_class" placeholder="Search is all you need">
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <!-- /search field -->
-                    <!-- ask button -->
-                    <div class="col-sm-1 col-lg-1 col-md-1 col-xs-1 text-center" id="ask_btn" style="display: inline-block;">
-                        <a href="/ask">
-                            <button type="submit" class="btn btn-success" style="background-color: #0F8933;">
-                                Search</button>
-                        </a>
-                    </div>
-                    <!-- /ask button -->
+{% extends "base.html" %}
+
+{% block title %}Sing Up{% endblock %}
+
+{% block content_left %} 
+    <div class="container" id="register_body" style="width: 100%; ">
+        <form class="form-horizontal" action='' method="POST" style="margin-bottom: 18px;">
+            <fieldset>
+                <div id="legend">
+                    <h2 class="">Register</h2>
                 </div>
-                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" id="user_field" style="white-space: nowrap;">
-                    <div class="row" id="user_header">
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                            <a href="/profile/{{ user.username }}">
-                                <img src="https://www.apple.com/v/home/bq/images/og.jpg?201504300657" alt="profile_photo" class="img-circle profile_photo">
-                            </a>
-                        </div>
-
-                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                            <h5><a href="/profile/" style=" text-decoration: none; ">
-                                user.username
-                            </a></h5>
-
-                            <div class="row">
-                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                                    <a href="/settings" style="">Settings</a>
-                                </div>
-                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                                    <a href="/logout" style="">Log In</a>
-                                </div>
-                            </div>
-                        </div>
+                <div class="control-group">
+                    <!-- Username -->
+                    <label class="control-label"  for="username">Username</label>
+                    <div class="controls">
+                        <input type="text" id="username" name="username" value="{{ current_name }}" placeholder="" class="input-xlarge">
+                        <p class="help-block">Username can contain any letters or numbers, without spaces</p>
                     </div>
                 </div>
-            </div>
-        </div>
-    </nav>
-</div>
 
-<table width="100%" height="300px" border="0">
-    <tr>
-        <td height="70px"></td>
-    </tr>
-    <tr>
-        <td width="7%"></td>
-        <td width="50%" >
-            <div class="container" id="register_body" style="width: 100%; display: inline-block; ">
-                <form class="form-horizontal" action='' method="POST" style="margin-bottom: 18px;">
-                    <fieldset>
-                        <div id="legend">
-                            <h2 class="">Register</h2>
-                        </div>
-                        <div class="control-group">
-                            <!-- Username -->
-                            <label class="control-label"  for="username">Username</label>
-                            <div class="controls">
-                                <input type="text" id="username" name="username" placeholder="" class="input-xlarge">
-                                <p class="help-block">Username can contain any letters or numbers, without spaces</p>
-                            </div>
-                        </div>
+                <div class="control-group">
+                    <!-- E-mail -->
+                    <label class="control-label" for="email">E-mail</label>
+                    <div class="controls">
+                        <input type="text" id="email" name="email" value="{{ current_email }}" placeholder="" class="input-xlarge">
+                        <p class="help-block">Please provide your E-mail</p>
+                    </div>
+                </div>
 
-                        <div class="control-group">
-                            <!-- E-mail -->
-                            <label class="control-label" for="email">E-mail</label>
-                            <div class="controls">
-                                <input type="text" id="email" name="email" placeholder="" class="input-xlarge">
-                                <p class="help-block">Please provide your E-mail</p>
-                            </div>
-                        </div>
+                <div class="control-group">
+                    <!-- Password-->
+                    <label class="control-label" for="password">Password</label>
+                    <div class="controls">
+                        <input type="password" id="password" name="password"  placeholder="" class="input-xlarge">
+                        <p class="help-block">Password should be at least 4 characters</p>
+                    </div>
+                </div>
 
-                        <div class="control-group">
-                            <!-- Password-->
-                            <label class="control-label" for="password">Password</label>
-                            <div class="controls">
-                                <input type="password" id="password" name="password" placeholder="" class="input-xlarge">
-                                <p class="help-block">Password should be at least 4 characters</p>
-                            </div>
-                        </div>
+                <div class="control-group">
+                    <!-- Password -->
+                    <label class="control-label"  for="password_confirm">Password (Confirm)</label>
+                    <div class="controls">
+                        <input type="password" id="password_confirm" name="password_confirm" placeholder="" class="input-xlarge">
+                        <p class="help-block">Please confirm password</p>
+                    </div>
+                </div>
 
-                        <div class="control-group">
-                            <!-- Password -->
-                            <label class="control-label"  for="password_confirm">Password (Confirm)</label>
-                            <div class="controls">
-                                <input type="password" id="password_confirm" name="password_confirm" placeholder="" class="input-xlarge">
-                                <p class="help-block">Please confirm password</p>
-                            </div>
-                        </div>
+                <div class="control-group" style="margin-top: 19px;">
+                    <!-- Button -->
+                    <div class="controls">
+                        <button class="btn btn-success">Register</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div> <!-- /container -->
 
-                        <div class="control-group" style="margin-top: 19px;">
-                            <!-- Button -->
-                            <div class="controls">
-                                <button class="btn btn-success">Register</button>
-                            </div>
-                        </div>
-                    </fieldset>
-                </form>
-            </div> <!-- /container -->
-        </td>
-
-        <td width="5%"></td>
-        <td width="30%">
-            <div class="container" id="images">
-                <ul class="row">
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                </ul>
-            </div>
-        </td>
-        <td width="7%"></td>
-
-    </tr>
-</table>
-
-
-</body>
-</html>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content_left %} 
+<div class="container" id="newlogin" >
+            <!--<div class="row" >-->
+            <div class="span12">
+                <form class="form-horizontal" action="/auth/" method="POST" style="margin-bottom: 18px;"> {% csrf_token %}
+                    <fieldset>
+                        <div id="legend">
+                            <h2 class="">Login</h2>
+                        </div>
+                        <div class="control-group">
+                            <!-- Username -->
+                            <label class="control-label"  for="username">Username</label>
+                            <div class="controls">
+                                <input type="text" id="username" name="username" placeholder="" class="input-xlarge">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <!-- Password-->
+                            <label class="control-label" for="password">Password</label>
+                            <div class="controls" style="border-radius: 3px;">
+                                <input type="password" id="password" name="password" placeholder="" class="input-xlarge">
+                            </div>
+                        </div>
+                        {% if form.errors %}
+                            <p class="error">Error: check usernmae or password</p>
+                        {% endif %}
+                        <div class="control-group" style="margin-top: 15px;">
+                            <!-- Button -->
+                            <div class="controls">
+                                <button class="btn btn-success">Login</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <!--</div>-->
+</div>
+{% endblock %}
