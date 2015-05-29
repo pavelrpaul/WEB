@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Add Photo{% endblock %}
+
+{% block content_left %}
+<!-- <script type="text/javascript" src="/add.js"></script> -->
+
+<h2>Add Photo</h2>
+<br>
+<div id="newlogin">
+<!-- {% if message %}
+<div class="alert alert-danger error__block" role="alert" style="padding: 5px;">
+<h5>{{ message.message | safe }}</h5>
+</div>
+{% endif %}
+-->
+	<form action="/set_photo/" method="post" enctype="multipart/form-data">
+		{% csrf_token %}
+			{% for field in form_photo %}
+				<div class="fieldWrapper">
+					<div class="form-group">
+
+					{{ field.label_tag }}
+					
+					{{ field }}
+					{% if field.errors %}
+						<div class="alert alert-danger error__block" role="alert" style="padding: 0px;">
+							<h5>{{ field.errors }}</h5>
+						</div>
+					{% endif %}
+					</div>
+				</div>
+			{% endfor %}
+		<br>
+		<p class="help-block">Just one click.</p>
+		<button type="submit" class="btn btn-success">Add Photo</button>
+	</form>
+</div>
+
+{% endblock %}
+
+{% block user_field %}
+	{{ block.super }}
+{% endblock %}

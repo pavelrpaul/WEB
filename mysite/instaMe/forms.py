@@ -3,7 +3,7 @@ import os
 from django.core.files import File
 from django.core.validators import validate_email, ValidationError
 from django.contrib.auth.models import User
-from instaMe.models import Profile, #Question, Tag, Answer
+from instaMe.models import Profile, Photo, Comment, PLike 
 from django.contrib.auth.hashers import check_password
 
 import string
@@ -91,7 +91,7 @@ class SignUpForm(forms.Form):
 			Profile.objects.create(user=user, filename=name_pic)
 			return user
 		else:
-			filename = '/default/' + new_username[0].lower() + '.png'		# Default avatar
+			filename = 'default.jpg'		# Default avatar
         	Profile.objects.create(user=user, filename=filename)
         	return user
 
@@ -129,10 +129,60 @@ class EditProfileForm(forms.Form):
 
 		user.save()
 
+class InstaCommentForm(forms.Form):
+	text = forms.CharField(label='Comment',  
+		widget=forms.Textarea(attrs={
+			'class': 'form-control',
+			'placeholder': 'Details here',
+			'rows':'5'
+			}))
+	def __init__(self, *args, **kwargs):
+		self.request = kwargs.pop('request', None)
+		super(InstaCommentForm, self).__init__(*args, **kwargs)
+
+	def save(self, photo):
+		new_text = self.cleaned_data['text']
+		author = self.request.user
+
+		comment = Comment.objects.create(text=new_text, author=self.request.user, photo=photo)
+		return comment
+
+class InstaPhotoForm(forms.Form):
+	pic = forms.ImageField(label='File input')
+
+	text = forms.CharField(label='Comment',  
+		widget=forms.Textarea(attrs={
+			'class': 'form-control',
+			'placeholder': 'Details here',
+			'rows':'5'
+			}))
+	def __init__(self, *args, **kwargs):
+		self.request = kwargs.pop('request', None)
+		super(InstaPhotoForm, self).__init__(*args, **kwargs)
+
+
+	def clean_pic(self):		
+		max_size = 4
+		check_pic = self.cleaned_data.get('pic',False)
+		if check_pic:
+			if check_pic._size > max_size * 1024 * 1024:
+				raise ValidationError("large size")
+			return check_pic
+
+	def save(self):
+		new_text = self.cleaned_data['text']
+		author = self.request.user
+
+		check_pic = self.cleaned_data.get('pic',False)		# Check picture
+		if check_pic:
+			name_pic = handleUploadedFile(check_pic)
+			print name_pic
+
+		photo = Photo.objects.create(filename=name_pic, author=self.request.user)
+		comment = Comment.objects.create(text=new_text, author=self.request.user, photo=photo)
 
 class EditPhotoForm(forms.Form):
 	pic = forms.ImageField(label='File input')
-
 
 	def __init__(self, *args, **kwargs):
 		self.request = kwargs.pop('request', None)

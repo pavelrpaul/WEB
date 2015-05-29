@@ -13,10 +13,26 @@ class Profile(models.Model):
 # class Photo(models.Model):
 # 	filename = 
 
+class PLike(models.Model):
+	author = models.ForeignKey(User)
+	value = models.IntegerField(default=0)
+
+class Photo(models.Model):
+	filename = models.ImageField(upload_to='/uploads/', default='default.png')
+	likes = models.ManyToManyField(PLike)
+	data = models.DateTimeField(default=datetime.now)
+	author = models.ForeignKey(User)
+
+	def __unicode__(self):
+		return str(self.title)
+
 class Comment(models.Model):
-	title = models.CharField(max_length=255)
 	text = models.TextField()
 	data = models.DateTimeField(default=datetime.now)
 	author = models.ForeignKey(User)
+	photo = models.ForeignKey(Photo)
+
 	def __unicode__(self):
 		return str(self.title)
+
+

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block content_left %}
+<!-- <script type="text/javascript" src="/signup.js"></script> -->
+
+	<div  id="newlogin">
+	<h2>Join to community</h2>
+	<br>
+		<form action="/signup/" method="post" enctype="multipart/form-data">
+		    {% csrf_token %}
+			{% for field in form %}
+			    <div class="fieldWrapper">
+			        <div class="form-group">
+			        	{% if field.id == 'id_userID' %}
+			        		{{ field.value|default_if_none:"123" }}
+			        	{% endif %}
+
+			        	{{ field.label_tag }} 
+
+			        	{{ field }}
+			        	{% if field.errors %}
+						    <div class="alert alert-danger error__block" role="alert" style="padding: 0px;">
+						        <h5>{{ field.errors }}</h5>
+						    </div>
+						{% endif %}
+			        </div>
+			    </div>
+			{% endfor %}
+			
+			<p class="help-block">Just one click.</p>
+		    <input type="submit" class="btn btn-default" value="Submit" />
+		</form>
+	</div>
+
+{% endblock %}
+
+
+{% block user_field %}
+{{ block.super }}
+{% endblock %}
